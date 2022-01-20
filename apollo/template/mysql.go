@@ -17,7 +17,7 @@ type Mysql struct {
 }
 
 func (msql *Mysql) Engine() (*xorm.Engine, error) {
-	Log.Info("Mysql Connection : "+fmt.Sprintf("%+v", msql), zap.String("中间件", "Mysql"))
+	Log.Info("Mysql Connection : "+fmt.Sprintf("%+v", msql), zap.String("middleware", "Mysql"))
 	dbUrl := fmt.Sprintf("%v:%v@(%v)/%v?charset=%v", msql.User, msql.Password, msql.Host, msql.Database, msql.Charset)
 	dbEngine, err := xorm.NewEngine("mysql", dbUrl)
 	if err != nil {

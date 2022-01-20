@@ -44,7 +44,7 @@ func (o *Redis) Engin(dbNumber int) (*RedisPool, error) {
 
 func (o *Redis) newRedis(ismaster bool, dbNumber int) (*redis.Pool, error) {
 	Log.Info("Redis Connection : "+strings.Join(o.Addresses, ",")+strconv.Itoa(dbNumber),
-		zap.String("中间件", "Redis"))
+		zap.String("middleware", "Redis"))
 	var newErr error
 	sntnl := &sentinel.Sentinel{
 		Addrs:      o.Addresses,

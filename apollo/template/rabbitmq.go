@@ -28,7 +28,7 @@ type RabbitChannel struct {
 
 func (o *RabbitMq) Engine() (*RabbitChannel, error) {
 	url := fmt.Sprintf("amqp://%v:%v@%v/", o.User, o.Password, o.Host)
-	Log.Info("RabbitMQ Connection : " +url,zap.String("中间件","rabbitmq") )
+	Log.Info("RabbitMQ Connection : " +url,zap.String("middleware","rabbitmq") )
 	conn, err := amqp.Dial(url)
 	if err != nil {
 		return nil, err
@@ -95,7 +95,7 @@ func (o *RabbitChannel) declareExchange(exchangeName string) error {
 		nil,
 	)
 	if err != nil {
-		Log.Error(fmt.Sprintf("template/rabbitmq: %v",err),zap.String("中间件","rabbitmq"))
+		Log.Error(fmt.Sprintf("template/rabbitmq: %v",err),zap.String("middleware","rabbitmq"))
 		// 交换机不存在的时候
 		err := o.channel.ExchangeDeclare(
 			exchangeName,
@@ -125,7 +125,7 @@ func (o *RabbitChannel) declareQueue(queueName string) error {
 		nil,
 	)
 	if err != nil {
-		Log.Error(fmt.Sprintf("template/rabbitmq: %v",err),zap.String("中间件","rabbitmq"))
+		Log.Error(fmt.Sprintf("template/rabbitmq: %v",err),zap.String("middleware","rabbitmq"))
 		// 交换机不存在的时候
 		_, errw := o.channel.QueueDeclare(
 			queueName,
@@ -192,12 +192,12 @@ func (r *RabbitChannel) monitor() {
 			select {
 			case err := <-r.connNotify:
 				if err != nil {
-					Log.Error(fmt.Sprintf("template/rabbitmq connectionNotify:    %v", err),zap.String("中间件","rabbitmq"))
+					Log.Error(fmt.Sprintf("template/rabbitmq connectionNotify:    %v", err),zap.String("middleware","rabbitmq"))
 					r.retryAttachConnection()
 				}
 			case err := <-r.channelNotify:
 				if err != nil {
-					Log.Error(fmt.Sprintf("template/rabbitmq channelNotify:  %v", err),zap.String("中间件","rabbitmq"))
+					Log.Error(fmt.Sprintf("template/rabbitmq channelNotify:  %v", err),zap.String("middleware","rabbitmq"))
 					r.retryAttachChannel()
 				}
 
@@ -221,10 +221,10 @@ func (r *RabbitChannel) retryAttachChannel() {
 	)
 	for !connected {
 		counter++
-		Log.Error(fmt.Sprintf("template/rabbitmq: retry create channel times %v ", counter),zap.String("中间件","rabbitmq"))
+		Log.Error(fmt.Sprintf("template/rabbitmq: retry create channel times %v ", counter),zap.String("middleware","rabbitmq"))
 		r.channel, err = r.conn.Channel()
 		if err != nil {
-			Log.Error(fmt.Sprintf("template/rabbitmq: create channle is failed  %v", err),zap.String("中间件","rabbitmq"))
+			Log.Error(fmt.Sprintf("template/rabbitmq: create channle is failed  %v", err),zap.String("middleware","rabbitmq"))
 			time.Sleep(RetryTimeInterval * time.Second)
 			continue
 		}
@@ -243,11 +243,11 @@ func (r *RabbitChannel) retryAttachConnection() {
 	)
 	for !connected {
 		counter++
-		Log.Error(fmt.Sprintf("rabbitmq: retry create connection times %v ", counter),zap.String("中间件","rabbitmq"))
+		Log.Error(fmt.Sprintf("rabbitmq: retry create connection times %v ", counter),zap.String("middleware","rabbitmq"))
 		url := fmt.Sprintf("amqp://%v:%v@%v/", r.conf.User, r.conf.Password, r.conf.Host)
 		r.conn, err = amqp.Dial(url)
 		if err != nil {
-			Log.Error(fmt.Sprintf("rabbitmq: create connection is failed  %v\n", err),zap.String("中间件","rabbitmq"))
+			Log.Error(fmt.Sprintf("rabbitmq: create connection is failed  %v\n", err),zap.String("middleware","rabbitmq"))
 			time.Sleep(RetryTimeInterval * time.Second)
 			continue
 		}

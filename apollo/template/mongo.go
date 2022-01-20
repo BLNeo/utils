@@ -28,7 +28,7 @@ func (d *Mongo) Engine() (*mongo.Client, error) {
 	}
 	mongoUrl := "mongodb://" + host + "/"
 	clientoptions.ApplyURI(mongoUrl)
-	Log.Info("Mongo Connection : "+mongoUrl, zap.String("中间件", "Mongo"))
+	Log.Info("Mongo Connection : "+mongoUrl, zap.String("middleware", "Mongo"))
 	client, err := mongo.Connect(context.Background(), clientoptions)
 	if err != nil {
 		return nil, err
