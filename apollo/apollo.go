@@ -1,10 +1,10 @@
-package pkg
+package apollo
 
 import (
 	"bytes"
 	"github.com/shima-park/agollo"
 	"github.com/spf13/viper"
-	"github.com/swhc/utils/apollo/template"
+	template2 "github.com/swhc/utils/template"
 )
 
 const (
@@ -27,7 +27,7 @@ func NewApollo(endpoint, appID, cluster string) (*Apollo, error) {
 }
 
 // 获取到所有mysql地址
-func (a *Apollo) Mysql() (map[string]*template.Mysql, error) {
+func (a *Apollo) Mysql() (map[string]*template2.Mysql, error) {
 	ap, err := agollo.New(a.Endpoint, a.AppID, agollo.Cluster(a.ClusterName), agollo.AutoFetchOnCacheMiss())
 	if err != nil {
 		return nil, err
@@ -39,7 +39,7 @@ func (a *Apollo) Mysql() (map[string]*template.Mysql, error) {
 		return nil, err
 	}
 	// 此时存在多个 key =》 mysql
-	var result = make(map[string]*template.Mysql)
+	var result = make(map[string]*template2.Mysql)
 	if err := v.Unmarshal(&result); err != nil {
 		return nil, err
 	}
@@ -47,7 +47,7 @@ func (a *Apollo) Mysql() (map[string]*template.Mysql, error) {
 }
 
 // 获取到所有redis的地址
-func (a *Apollo) Redis() (map[string]*template.Redis, error) {
+func (a *Apollo) Redis() (map[string]*template2.Redis, error) {
 	ap, err := agollo.New(a.Endpoint, a.AppID, agollo.Cluster(a.ClusterName), agollo.AutoFetchOnCacheMiss())
 	if err != nil {
 		return nil, err
@@ -59,7 +59,7 @@ func (a *Apollo) Redis() (map[string]*template.Redis, error) {
 		return nil, err
 	}
 	// 此时存在多个 key =》 mysql
-	var result = make(map[string]*template.Redis)
+	var result = make(map[string]*template2.Redis)
 	if err := v.Unmarshal(&result); err != nil {
 		return nil, err
 	}
@@ -67,7 +67,7 @@ func (a *Apollo) Redis() (map[string]*template.Redis, error) {
 }
 
 // 获取到所有redis的地址
-func (a *Apollo) Mongo() (map[string]*template.Mongo, error) {
+func (a *Apollo) Mongo() (map[string]*template2.Mongo, error) {
 	ap, err := agollo.New(a.Endpoint, a.AppID, agollo.Cluster(a.ClusterName), agollo.AutoFetchOnCacheMiss())
 	if err != nil {
 		return nil, err
@@ -79,7 +79,7 @@ func (a *Apollo) Mongo() (map[string]*template.Mongo, error) {
 		return nil, err
 	}
 	// 此时存在多个 key =》 mysql
-	var result = make(map[string]*template.Mongo)
+	var result = make(map[string]*template2.Mongo)
 	if err := v.Unmarshal(&result); err != nil {
 		return nil, err
 	}
@@ -87,7 +87,7 @@ func (a *Apollo) Mongo() (map[string]*template.Mongo, error) {
 }
 
 // 获取到所有redis的地址
-func (a *Apollo) RabbitMq() (map[string]*template.RabbitMq, error) {
+func (a *Apollo) RabbitMq() (map[string]*template2.RabbitMq, error) {
 	ap, err := agollo.New(a.Endpoint, a.AppID, agollo.Cluster(a.ClusterName), agollo.AutoFetchOnCacheMiss())
 	if err != nil {
 		return nil, err
@@ -99,7 +99,7 @@ func (a *Apollo) RabbitMq() (map[string]*template.RabbitMq, error) {
 		return nil, err
 	}
 	// 此时存在多个 key =》 mysql
-	var result = make(map[string]*template.RabbitMq)
+	var result = make(map[string]*template2.RabbitMq)
 	if err := v.Unmarshal(&result); err != nil {
 		return nil, err
 	}

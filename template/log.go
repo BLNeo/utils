@@ -11,7 +11,7 @@ import (
 )
 
 var (
-	Log *Logger =initLog(true,"default")
+	Log *Logger = initLog(true,"default")
 	once *sync.Once
 )
 
@@ -22,7 +22,7 @@ type Logger struct {
 }
 
 
-func initLog (debug bool,serviceName string)*Logger{
+func initLog (debug bool,serviceName string)*Logger {
 	l :=&Logger{
 		debug: debug,
 		name:  serviceName,
@@ -32,7 +32,7 @@ func initLog (debug bool,serviceName string)*Logger{
 
 
 
-func LogSetMode(debug bool,serviceName string)*Logger{
+func LogSetMode(debug bool,serviceName string)*Logger {
 	l := initLog(debug,serviceName)
 	if Log !=nil {
 		Log = l
